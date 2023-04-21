@@ -6,12 +6,6 @@ import random as rd
 
 
 # [INPUT CLASS INIT]
-led = Leds()
-display = Oled()
-bz = PiezoBuzzer()
-dot = Pixels()
-
-# [OUTPUT CLASS INIT]
 sw = Switches()
 pir = Pir()
 sonic = Ultrasonic()
@@ -22,7 +16,14 @@ temphumi = TempHumi()
 sound = Sound()
 color = Apds()
 
+# [OUTPUT CLASS INIT]
+led = Leds()
+display = Oled()
+bz = PiezoBuzzer()
+dot = Pixels()
 
+
+# [CLASS] : Module
 class Module():
     
     # [FUNCTION] : init
