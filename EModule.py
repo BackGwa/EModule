@@ -282,11 +282,27 @@ def flicker(count = 1, time = 0.5, pin = 0):
 def bzplay(key, sound, time):
     """
     ## [FUNCTION] : bzplay
-    bzplay 함수는 입력한 파라미터를 기반으로 부저에서 소리를 발생시킵니다.
+    입력한 파라미터를 기반으로 부저에서 소리를 발생시킵니다.
     """
     return bz.tone(key, sound, time)
 
 
 # [FUNCTION] : rainbow
 def rainbow(fps = 30, count = 2):
+    """
+    ## [FUNCTION] : rainbow
+    파라미터를 기반으로 PixelDisplay에 무지개 효과를 재생합니다.
+    """
     return dot.rainbow(fps, count)
+
+
+# [FUNCTION] : start
+def start(file, function):
+    """
+    ## [FUNCTION] : start
+    프로그램의 시작점을 정의합니다.
+    """ 
+    if file == '__main__':
+        return function()
+    else:
+        return -1
