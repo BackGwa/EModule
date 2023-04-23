@@ -192,6 +192,8 @@ class Logic:
             return 1 if(valueA == 1 or valueB == 1) else 0
         elif(syntax == 'not'):
             return 0 if(valueA == 1) else 1
+        elif(syntax == 'xor'):
+            return 1 if self.gate('or', self.gate('and', valueA, self.gate('not', valueB)), self.gate('and', valueB, self.gate('not', valueA))) else 0
         else:
             return 0
 
@@ -208,6 +210,8 @@ class Logic:
             return self.gate('not', self.gate('or', valueA, valueB))
         elif(syntax == 'not'):
             return self.gate('not', self.gate('not', valueA))
+        elif(syntax == 'xor'):
+            return 1 if self.gate('not', self.gate('xor', valueA, valueB)) else 0
         else:
             return 0
 
