@@ -1,8 +1,18 @@
+
+# EModule : It's fast. It's simple. It's too easy
+
+# https://github.com/BackGwa/EModule
+# 2201 강찬영
+
+# [LICENSE] : MIT LICENSE
+
+
 # [IMPORT MODULE]
 from pop import Leds, Oled, PiezoBuzzer, Pixels
 from pop import Switches, Pir, Ultrasonic, Cds, Potentiometer, Psd, TempHumi, Sound, Apds
 from time import sleep as delay
 import random as rd
+import threading
 
 
 # [INPUT CLASS INIT]
@@ -35,6 +45,7 @@ class Module():
         led.off()
         display.clearDisplay()
         dot.clear()
+        bz.tone(4, 'REST', 16)
         return
     
     
@@ -46,7 +57,8 @@ class Module():
         """
         return input('[ ENTER를 눌러 다음 코드를 실행하거나 종료합니다. ]')
     
-
+    
+tetq = ""
 
 # [CLASS] : Write
 class Write():
@@ -63,6 +75,13 @@ class Write():
             dot.clear()
         return
     
+    def pixelFill(self, color = [255, 255, 255]):
+        dot.fill(color)
+        return
+    
+    def drawPixel(self, x, y, color = [255, 255, 255]):
+        dot.drawPixel(x, y, color)
+        return
     
     # [FUNCTION] : display
     def display(self, text):
@@ -71,7 +90,25 @@ class Write():
         입력한 파라미터를 기반으로 OLED에 글씨를 보여줍니다.
         """
         return display.print(text)
+    
+    DisplayText = " "
+    cache = " "
+    
+    def screen(self, text):
+        self.DisplayText = text
+    
+    def __ThreadDisplay__(self):
+        display.setTextSize(8)
+        while(True):
+            if(self.DisplayText != self.cache):
+                self.cache = self.DisplayText
+                display.clearDisplay()
+                display.print(f"{self.DisplayText}")
 
+    def ThreadDisplay(self):
+        t = threading.Thread(target=self.__ThreadDisplay__)
+        t.daemon = True
+        t.start()
 
 # [CLASS] : ReadSensor
 class ReadSensor():
@@ -232,6 +269,10 @@ def register(target, function):
         temphumi.registerCallback(function)
     elif(target == 'apds'):
         color.registerCallback(function)
+    elif(target == 'psd'):
+        psd.registerCallback(function, Psd.TYPE_CHILD)
+    elif(target == 'meter'):
+        meter.registerCallback(function)
     return
 
 
@@ -248,9 +289,11 @@ def unregister(target):
     elif(target == 'sonic'):
         sonic.unregisterCallback()
     elif(target == 'temphumi'):
-        temphumi.unregisterCallback(function)
+        temphumi.unregisterCallback()
     elif(target == 'apds'):
-        color.unregisterCallback(function)
+        color.unregisterCallback()
+    elif(target == 'psd'):
+        psd.unregisterCallback()
     return
 
 
@@ -261,7 +304,7 @@ def random(vartype, min = 0, max = 100):
     random 함수는 파라미터를 기반으로 랜덤한 값을 반환합니다.
     """
     return rd.randint(min, max) if(vartype == 'int') else (rd.uniform(min, max) if(vartype == 'float') else 0)
-    
+
 
 # [FUNCTION] : flicker
 def flicker(count = 1, time = 0.5, pin = 0):
@@ -306,6 +349,8 @@ def start(file, function):
     ## [FUNCTION] : start
     프로그램의 시작점을 정의합니다.
     """ 
+    m = Module()
+    m.init()
     if file == '__main__':
         return function()
     else:
