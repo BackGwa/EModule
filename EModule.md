@@ -108,7 +108,7 @@ Write 클래스는 하드웨어에 피드백이 발생합니다.
 |`ThreadDisplay`|OLED를 Callback으로 설정합니다.|-|
 |`screen`|Callback한 OLED의 글씨를 변경합니다.|`표시_글씨`|
 
-## `Clear` 클래스
+### `Clear` 클래스
 Clear 클래스는 발생한 피드백 요소를 제거합니다.
 
 |함수|기능|매개변수|
