@@ -84,11 +84,12 @@ class Write():
         return
     
     # [FUNCTION] : display
-    def display(self, text):
+    def display(self, text, custom_pos = False, pos = [0, 0]):
         """
         ## [FUNCTION] : display
         입력한 파라미터를 기반으로 OLED에 글씨를 보여줍니다.
         """
+        if(custom_pos): display.SetCusor(pos)
         return display.print(text)
     
     DisplayText = " "
