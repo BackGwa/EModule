@@ -165,11 +165,11 @@ write.display("Hello, World!", True, [24, 12])
 * **ThreadDisplay와 screen 예시**
 ```python
 
-# ThreadDisplay는 다른 코드의 지연을 방지하기 위해 사용합니다. 사용하기 위해서는 이렇게 작성합니다.
+# ThreadDisplay는 코드 지연을 방지하기 위해 사용합니다. 사용하기 위해서는 이렇게 작성합니다.
 write.ThreadDisplay()
 
 # ThreadDisplay를 활성화하였다면, display 함수 대신, screen 함수로 글씨를 바꿉니다.
-wrtie.screen("Hello, World!")
+write.screen("Hello, World!")
 
 ```
 
